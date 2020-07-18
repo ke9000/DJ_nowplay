@@ -1,0 +1,7 @@
+body {
+	margin: 20px;
+}
+
+input, textarea {
+	min-width: 200px;
+}
