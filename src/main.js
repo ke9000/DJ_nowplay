@@ -1,6 +1,7 @@
 //ハッシュタグ登録用
 hashtags = new Array();
 hashtag_join = "";
+arrow_post = 1;
 //テキスト長確認用
 check_text = "";
 
@@ -11,9 +12,16 @@ function click_btn(num) {
 	
 	hash_tag1 = hash_tag1.replace(/#/g, '');
 	hash_tag2 = hash_tag2.replace(/#/g, '');
-	
+
+	if(!hash_tag1){
+		alert("かならずタグ1は入力してください");
+		arrow_post = 0;
+	}
 	hashtags.push(hash_tag1);
-	hashtags.push(hash_tag2);
+
+	if(hash_tag2){
+		hashtags.push(hash_tag2);
+	}
 	
 	//tb1_general
 	let table = document.getElementById("tb1");
@@ -61,18 +69,20 @@ function click_btn(num) {
 	let join_text = "No."+num+"/"+song_name+singer+product+"%0A"+other_text;
 	console.log(check_text.length);//debug
 
-	if(check_text.length <= 144){
+	if(check_text.length <= 144 && arrow_post == 1){
 		let url = "https://twitter.com/share?text="+join_text+"&hashtags="+hashtag_join+"&url=%0A";
 		window.open(url, 'tweetwindow', 'width=650, height=470, personalbar=0, toolbar=0, scrollbars=1, sizable=1');
-		
-		//初期化
-		hashtags = [];
-		hashtag_join = "";
-		check_text = "";
-
+	} else if(arrow_post == 0) {
+		alert("ハッシュタグに関連して入力エラーがあります。修正してください。");
+		arrow_post = 0;
 	} else {
 		alert("投稿可能文字数を超過しています。文字数を減らしてください");
 	}
+
+	//初期化
+	hashtags = [];
+	hashtag_join = "";
+	check_text = "";
 }
 
 function addrow(){
@@ -114,15 +124,16 @@ function fixedEncodeURIComponent(str) {
 }
 
 function check_hashtag(str){
-	let tag1 = str.match(/^#.+\s/g);
+	let tag1 = str.match(/^#.+/g);
 	if(tag1){
-		alert("文の頭にハッシュタグを挿入しないでください.");
+		alert("文頭にはハッシュタグをつけないでください");
+		arrow_post = 0;
 	}
 	tag2 = str.match(/\s#\S+/g);
 	if(tag2){
-		for(i=0;i<tag.length; i++){
-			tag[i] = tag[i].replace(/\s#/g, '');
-			hashtags.push(tag[i]);
+		for(i=0;i<tag2.length; i++){
+			tag2[i] = tag2[i].replace(/\s#/g, '');
+			hashtags.push(tag2[i]);
 		}
 	}
 	return str.replace(/\s#\S+/g, ' ');
@@ -169,3 +180,18 @@ function create_url(){
 	document.execCommand("Copy");
 	window.getSelection().removeAllRanges();
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+	let list = location.search;
+	if(list){
+		compress = list.replace(/\?list=/g, '').toString();
+		json_txt = LZString.decompressFromBase64(compress);
+		jsondata = JSON.parse(json_txt);
+		console.log(jsondata);
+
+		for(i=1; i<=jsondata["count"]; i++){
+			console.log(i);
+			addrow();
+		}
+	}
+})
