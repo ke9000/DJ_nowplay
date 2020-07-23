@@ -12,6 +12,8 @@
 		<link rel="stylesheet" href="main.css" >
 		<script type="text/javascript" src="main.js"></script>
 
+		<script type="text/javascript" src="lz-string.min.js"></script>
+
 		<!--font-->
 		<link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
 		<title>なうぷれ投稿フォーム</title>
@@ -54,8 +56,8 @@
 			<div class="form-group mb-2">
 				<button class="btn btn-primary" type="button" onclick="addrow();">追加</button>
 				<button class="btn btn-primary" type="button" onclick="delrow();">削除</button>
-				<input class="form-control" type="text" name="">
-				<button class="btn btn-primary" type="button">URL生成&コピー</button>
+				<input class="form-control" type="text" name="" id="share_url">
+				<button class="btn btn-primary" type="button" onClick="create_url()">URL生成&コピー</button>
 			</div>
 		</form>
 

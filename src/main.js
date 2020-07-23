@@ -114,8 +114,12 @@ function fixedEncodeURIComponent(str) {
 }
 
 function check_hashtag(str){
-	tag = str.match(/\s#\S+/g);
-	if(tag){
+	let tag1 = str.match(/^#.+\s/g);
+	if(tag1){
+		alert("文の頭にハッシュタグを挿入しないでください.");
+	}
+	tag2 = str.match(/\s#\S+/g);
+	if(tag2){
 		for(i=0;i<tag.length; i++){
 			tag[i] = tag[i].replace(/\s#/g, '');
 			hashtags.push(tag[i]);
@@ -129,4 +133,39 @@ function create_hashtag(data){
 	for(i=1; i<data.length; i++){
 		hashtag_join += ","+data[i];
 	}
+}
+
+function create_url(){
+	let jsondata = {};
+	
+	//hashtag
+	let hash_tag1 = document.getElementById("hash_tag1").value.replace(/#/g, '');
+	let hash_tag2 = document.getElementById("hash_tag2").value.replace(/#/g, '');
+	
+	jsondata["hash_tag1"] = hash_tag1;
+	jsondata["hash_tag2"] = hash_tag2;
+
+	//tb1_general
+	let table = document.getElementById("tb1");
+	let count_row = table.rows.length;
+	jsondata["count"] = count_row-1;
+	for (i=1; i<table.rows.length; i++){
+		jsondata[i] = {};
+		let songdata = jsondata[i];
+		songdata["songname"] = table.rows[i].cells[1].children[0].value;
+		songdata["singer"] = table.rows[i].cells[2].children[0].value;
+		songdata["product"] = table.rows[i].cells[3].children[0].value;
+		songdata["other"] = table.rows[i].cells[4].children[0].value.replace(/\n/g, '\\n');
+	}
+	console.log(jsondata);
+	json_txt = JSON.stringify(jsondata);
+	compress = LZString.compressToBase64(json_txt);
+
+	let url_input = document.getElementById("share_url")
+	url_input.value = "http://suomomo.com/nowplay/index.html?list="+compress;
+
+	//コピー
+	url_input.select();
+	document.execCommand("Copy");
+	window.getSelection().removeAllRanges();
 }
