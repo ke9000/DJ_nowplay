@@ -189,9 +189,20 @@ document.addEventListener("DOMContentLoaded", function() {
 		jsondata = JSON.parse(json_txt);
 		console.log(jsondata);
 
-		for(i=1; i<=jsondata["count"]; i++){
-			console.log(i);
-			addrow();
+		document.getElementById("hash_tag1").value = jsondata["hash_tag1"];
+		document.getElementById("hash_tag2").value = jsondata["hash_tag2"];
+
+		let table = document.getElementById("tb1");
+		for(j=1; j<=jsondata["count"]; j++){
+			if(j >= 2){
+				addrow();
+			}
+			console.log(j);
+
+			table.rows[j].cells[1].children[0].value = jsondata[j]["songname"];
+			table.rows[j].cells[2].children[0].value = jsondata[j]["singer"];
+			table.rows[j].cells[3].children[0].value = jsondata[j]["product"];
+			table.rows[j].cells[4].children[0].value = jsondata[j]["other"].replace(/\\n/g, '\n');
 		}
 	}
 })
