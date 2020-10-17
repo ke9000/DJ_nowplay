@@ -81,10 +81,10 @@ function click_btn(num) {
 function addrow(){
 	let table = document.getElementById("tb1");
 	let row = table.insertRow(-1);
-	let cell = new Array(5);
+	let cell = new Array(6);
 
 	if (table.rows.length >= 1){
-		for(i=0; i<=5; i++){
+		for(i=0; i<=6; i++){
 			cell[i] = row.insertCell(-1);
 		}
 		cell[0].innerHTML = (table.rows.length -1);
@@ -93,6 +93,7 @@ function addrow(){
 		cell[3].innerHTML = '<input class="form-control" type="text" name="">';
 		cell[4].innerHTML = '<textarea id="my-textarea" class="form-control" name="" rows="1"></textarea>';
 		cell[5].innerHTML = '<button class="btn btn-primary" type="button" onclick="click_btn('+(table.rows.length -1)+');">投稿</button>';
+		cell[6].innerHTML = (table.rows.length -1);
 	}
 	
 }
