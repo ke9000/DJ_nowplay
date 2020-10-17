@@ -194,7 +194,7 @@ function create_csv(){
 		csvdata += table.rows[i].cells[1].children[0].value+",";
 		csvdata += table.rows[i].cells[2].children[0].value+",";
 		csvdata += table.rows[i].cells[3].children[0].value+",";
-		csvdata += table.rows[i].cells[4].children[0].value.replace(/\n/g, '\\n')+"\r\n";
+		csvdata += table.rows[i].cells[4].children[0].value.replace(/\n/g, ' ')+"\r\n";
 	}
 
 	let link = document.createElement("a");
