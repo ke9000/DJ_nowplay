@@ -78,24 +78,26 @@ function click_btn(num) {
 	arrow_post = 1;
 }
 
-function addrow(){
+function addrow(n){
 	let table = document.getElementById("tb1");
-	let row = table.insertRow(-1);
-	let cell = new Array(6);
-
-	if (table.rows.length >= 1){
-		for(i=0; i<=6; i++){
-			cell[i] = row.insertCell(-1);
-		}
-		cell[0].innerHTML = (table.rows.length -1);
-		cell[1].innerHTML = '<input class="form-control" type="text" name="">';
-		cell[2].innerHTML = '<input class="form-control" type="text" name="">';
-		cell[3].innerHTML = '<input class="form-control" type="text" name="">';
-		cell[4].innerHTML = '<textarea id="my-textarea" class="form-control" name="" rows="1"></textarea>';
-		cell[5].innerHTML = '<button class="btn btn-primary" type="button" onclick="click_btn('+(table.rows.length -1)+');">投稿</button>';
-		cell[6].innerHTML = (table.rows.length -1);
-	}
 	
+	for(i=0; i<n; i++){
+		let row = table.insertRow(-1);
+		let cell = new Array(6);
+
+		if (table.rows.length >= 1){
+			for(j=0; j<=6; j++){
+				cell[j] = row.insertCell(-1);
+			}
+			cell[0].innerHTML = (table.rows.length -1);
+			cell[1].innerHTML = '<input class="form-control" type="text" name="">';
+			cell[2].innerHTML = '<input class="form-control" type="text" name="">';
+			cell[3].innerHTML = '<input class="form-control" type="text" name="">';
+			cell[4].innerHTML = '<textarea id="my-textarea" class="form-control" name="" rows="1"></textarea>';
+			cell[5].innerHTML = '<button class="btn btn-primary" type="button" onclick="click_btn('+(table.rows.length -1)+');">投稿</button>';
+			cell[6].innerHTML = (table.rows.length -1);
+		}
+	}
 }
 
 function delrow(){
@@ -173,6 +175,34 @@ function create_url(){
 	url_input.select();
 	document.execCommand("Copy");
 	window.getSelection().removeAllRanges();
+}
+
+function create_csv(){
+	let csvdata = "";
+	
+	//hashtag
+	let hash_tag1 = document.getElementById("hash_tag1").value.replace(/#/g, '');
+	let hash_tag2 = document.getElementById("hash_tag2").value.replace(/#/g, '');
+	
+	csvdata += "tag1:,"+hash_tag1+"\r\n";
+	csvdata += "tag2:,"+hash_tag2+"\r\n";
+
+	//tb1_general
+	let table = document.getElementById("tb1");
+	for (i=1; i<table.rows.length; i++){
+		csvdata += i+",";
+		csvdata += table.rows[i].cells[1].children[0].value+",";
+		csvdata += table.rows[i].cells[2].children[0].value+",";
+		csvdata += table.rows[i].cells[3].children[0].value+",";
+		csvdata += table.rows[i].cells[4].children[0].value.replace(/\n/g, '\\n')+"\r\n";
+	}
+
+	let link = document.createElement("a");
+	link.download = "setlist.csv";
+	link.href = URL.createObjectURL(new Blob([csvdata],{type: "text/csv"}));
+	link.dataset.downloadurl = ["text/csv", link.download, link.href];
+	link.click();
+
 }
 
 document.addEventListener("DOMContentLoaded", function() {

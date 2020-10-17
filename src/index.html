@@ -56,10 +56,17 @@
 
 		<form class="form-inline mb-2">
 			<div class="form-group mb-2">
-				<button class="btn btn-primary" type="button" onclick="addrow();">追加</button>
+				<button class="btn btn-primary" type="button" onclick="addrow(1);">追加</button>
 				<button class="btn btn-primary" type="button" onclick="delrow();">削除</button>
 				<input class="form-control" type="text" name="" id="share_url">
 				<button class="btn btn-primary" type="button" onClick="create_url()">URL生成&コピー</button>
+			</div>
+		</form>
+
+		<form class="form-inline mb-2">
+			<div class="form-group mb-2">
+				<button class="btn btn-primary" type="button" onclick="addrow(10);">10行追加</button>
+				<button class="btn btn-primary" type="button" id="dl_csv" onClick="create_csv()">csvダウンロード</button>
 			</div>
 		</form>
 
