@@ -217,16 +217,16 @@ document.addEventListener("DOMContentLoaded", function() {
 		document.getElementById("hash_tag2").value = jsondata["hash_tag2"];
 
 		let table = document.getElementById("tb1");
-		for(j=1; j<=jsondata["count"]; j++){
-			if(j >= 2){
-				addrow();
+		for(k=1; k<=jsondata["count"]; k++){
+			if(k >= 2){
+				addrow(1);
 			}
-			console.log(j);
+			console.log(k);
 
-			table.rows[j].cells[1].children[0].value = jsondata[j]["songname"];
-			table.rows[j].cells[2].children[0].value = jsondata[j]["singer"];
-			table.rows[j].cells[3].children[0].value = jsondata[j]["product"];
-			table.rows[j].cells[4].children[0].value = jsondata[j]["other"].replace(/\\n/g, '\n');
+			table.rows[k].cells[1].children[0].value = jsondata[k]["songname"];
+			table.rows[k].cells[2].children[0].value = jsondata[k]["singer"];
+			table.rows[k].cells[3].children[0].value = jsondata[k]["product"];
+			table.rows[k].cells[4].children[0].value = jsondata[k]["other"].replace(/\\n/g, '\n');
 		}
 	}
 })
